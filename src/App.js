@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useCallback } from "react";
+import Selector from "./components/Selector";
 
-function App() {
+const EXAMPLE_LIST = ["App", "SMS Link", "Tracking Link", "Web"];
+
+const App = () => {
+  const [selectedList, setSelectedList] = useState([]);
+
+  const handleChangeInput = useCallback((e) => {
+    console.log("User Wrote something...", e.target.value);
+  }, []);
+
+  const handleSubmitSelector = useCallback((nextSelectedList) => {
+    console.log(nextSelectedList);
+    setSelectedList(nextSelectedList);
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Selector
+      list={EXAMPLE_LIST}
+      placeholder="밸류 선택"
+      selected={selectedList}
+      onChange={handleChangeInput}
+      onSubmit={handleSubmitSelector}
+    />
   );
-}
+};
 
 export default App;
